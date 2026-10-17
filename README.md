@@ -20,10 +20,11 @@ The export script (`scripts/`) is provided under the same terms.
 
 ## Sources / 出典
 
-Coordinates were plotted by hand on aerial imagery. The imagery used for each course is recorded
-per course in the SGCaddie ledger (`imagery_source`).
+Coordinates were plotted by hand on aerial imagery. The imagery each row was read from is in the
+`source` column: `nsw_imagery` (NSW aerial imagery) or `esri_world_imagery` (Esri World Imagery).
 
-座標は航空写真の上で手作業でプロットしたものです。コースごとに使った写真は台帳（`imagery_source`）に記録しています。
+座標は航空写真の上で手作業でプロットしたものです。各行がどの写真から読んだかは `source` 列にあります
+（`nsw_imagery`＝NSW 州の航空写真／`esri_world_imagery`＝Esri World Imagery）。
 
 - New South Wales, Australia: NSW aerial imagery —
   © State Government of NSW and Spatial Services (DCS), licensed under
@@ -50,7 +51,7 @@ Google・Apple の写真は使っていません。
 
 Columns: `country, region, course_id, course_name, hole_number, nine_name, hole_in_nine, green_type,
 tee_lat, tee_lng, front_lat, front_lng, center_lat, center_lng, back_lat, back_lng,
-dl_lat, dl_lng, dl2_lat, dl2_lng, plotted_at`. Coordinates are WGS84 decimal degrees.
+dl_lat, dl_lng, dl2_lat, dl2_lng, plotted_at, source`. Coordinates are WGS84 decimal degrees.
 
 ## Updating / 更新
 
@@ -64,6 +65,9 @@ It reads only published shared courses outside Japan (filtered in the query itse
 `data/plot_holes_overseas.csv`. The key comes from the maintainer's local environment and is never committed.
 
 ## Last updated / 更新日
+
+2026-10-17 — added the `source` column (imagery per row).
+`source` 列（行ごとの写真の出典）を追加。
 
 2026-10-17 — first data export: Panya Indra Golf Club (Bangkok, TH), 27 holes. Imagery: Esri World Imagery.
 初回の書き出し。Panya Indra Golf Club（タイ・バンコク）27 ホール。写真は Esri World Imagery。

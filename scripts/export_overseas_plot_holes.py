@@ -24,6 +24,8 @@ COLUMNS = [
     "country", "region", "course_id", "course_name", "hole_number", "nine_name", "hole_in_nine",
     "green_type", "tee_lat", "tee_lng", "front_lat", "front_lng", "center_lat", "center_lng",
     "back_lat", "back_lng", "dl_lat", "dl_lng", "dl2_lat", "dl2_lng", "plotted_at",
+    # Imagery the coordinates were read from (nsw_imagery / esri_world_imagery) — for attribution.
+    "source",
 ]
 PAGE = 1000
 IN_CHUNK = 50
