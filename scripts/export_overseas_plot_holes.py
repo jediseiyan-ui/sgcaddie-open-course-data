@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Export plot_holes rows for courses outside Japan (country != 'JP') to CSV. Run manually.
 
-    SUPABASE_URL=... SUPABASE_ANON_KEY=... python scripts/export_overseas_plot_holes.py [--out data/plot_holes_overseas.csv]
+    SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... python scripts/export_overseas_plot_holes.py [--out data/plot_holes_overseas.csv]
 
-Uses the anon key only: the public read policy returns published courses only, so unpublished
-work never leaks into the open data. Japanese courses are excluded by the query itself
-(country=neq.JP) and checked again before writing.
+The courses read policy is limited to signed-in users, so an anon key returns nothing; the
+maintainer runs this with the service-role key from a local environment (never committed).
+Only published shared courses are exported (is_published=true AND created_by IS NULL is part of
+the query itself), so unpublished work never leaks into the open data. Japanese courses are
+excluded by the query (country=neq.JP) and checked again before writing.
 """
 from __future__ import annotations
 
@@ -67,11 +69,12 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=Path(__file__).resolve().parent.parent / "data" / "plot_holes_overseas.csv")
     args = parser.parse_args()
     base = os.environ.get("SUPABASE_URL", "")
-    key = os.environ.get("SUPABASE_ANON_KEY", "")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "") or os.environ.get("SUPABASE_ANON_KEY", "")
     if not base or not key:
-        print("SUPABASE_URL and SUPABASE_ANON_KEY are required", file=sys.stderr)
+        print("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required", file=sys.stderr)
         return 2
-    courses = get(base, key, "courses?select=id,name,country,region&country=neq.JP&order=id.asc")
+    courses = get(base, key, "courses?select=id,name,country,region&country=neq.JP"
+                             "&is_published=eq.true&created_by=is.null&order=id.asc")
     holes: list[dict] = []
     ids = [c["id"] for c in courses]
     for i in range(0, len(ids), IN_CHUNK):

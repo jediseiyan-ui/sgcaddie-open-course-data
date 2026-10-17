@@ -57,12 +57,15 @@ dl_lat, dl_lng, dl2_lat, dl2_lng, plotted_at`. Coordinates are WGS84 decimal deg
 The export is run manually (it is not scheduled):
 
 ```
-SUPABASE_URL=... SUPABASE_ANON_KEY=... python scripts/export_overseas_plot_holes.py
+SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... python scripts/export_overseas_plot_holes.py
 ```
 
-It reads only published courses (the public read policy) and rewrites `data/plot_holes_overseas.csv`.
+It reads only published shared courses outside Japan (filtered in the query itself) and rewrites
+`data/plot_holes_overseas.csv`. The key comes from the maintainer's local environment and is never committed.
 
 ## Last updated / 更新日
 
-2026-10-17 — initial release (no overseas courses yet; the CSV contains the header only).
-初版。海外コースはまだ無く、CSV は見出し行だけです。
+2026-10-17 — first data export: Panya Indra Golf Club (Bangkok, TH), 27 holes. Imagery: Esri World Imagery.
+初回の書き出し。Panya Indra Golf Club（タイ・バンコク）27 ホール。写真は Esri World Imagery。
+
+2026-10-17 — initial release (header-only CSV).
